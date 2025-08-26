@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Aeonik";
+  src: url("../public/Aeonik\ TRIAL/AeonikTRIAL-Regular.otf");
+}
+
+body {
+  font-family: "Aeonik";
+}
+
+html,
+body {
+  height: 100dvh;
+  overflow: hidden;
+}
+
+body {
+  line-height: 1;
+}
+
+#webgl {
+  position: fixed;
+  inset: 0;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  height: 100dvh;
+}
+
+#app {
+  height: 100dvh;
+  z-index: 10;
+}
