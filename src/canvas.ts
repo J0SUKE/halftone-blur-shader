@@ -3,6 +3,7 @@ import { Dimensions, Size } from "./types/types"
 import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 import GUI from "lil-gui"
 import Media from "./media"
+import Scroll from "./scroll"
 
 export default class Canvas {
   element: HTMLCanvasElement
@@ -18,6 +19,7 @@ export default class Canvas {
   orbitControls: OrbitControls
   debug: GUI
   medias: Media[] = []
+  scroll: Scroll
 
   constructor() {
     this.element = document.getElementById("webgl") as HTMLCanvasElement
@@ -33,7 +35,7 @@ export default class Canvas {
     this.createDebug()
     this.createMedias()
 
-    //this.debug.hide()
+    this.debug.hide()
 
     this.render()
   }
@@ -148,6 +150,12 @@ export default class Canvas {
 
     this.medias.forEach((media) => {
       media.onResize(this.sizes)
+    })
+  }
+
+  onScroll(scrollY: number) {
+    this.medias?.forEach((media) => {
+      media.updateScroll(scrollY)
     })
   }
 

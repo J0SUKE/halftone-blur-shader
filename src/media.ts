@@ -4,6 +4,7 @@ import * as THREE from "three"
 import fragmentShader from "./shaders/fragment.glsl"
 import vertexShader from "./shaders/vertex.glsl"
 import GUI from "lil-gui"
+import gsap from "gsap"
 
 interface Props {
   element: HTMLImageElement
@@ -52,7 +53,21 @@ export default class Media {
     this.gui
       .add(this.material.uniforms.uProgress, "value", 0, 1)
       .name("progress")
-      .step(0.001)
+      .step(0.01)
+
+    gsap.fromTo(
+      this.material.uniforms.uProgress,
+      { value: 0 },
+      {
+        value: 1,
+        duration: 1.8,
+        scrollTrigger: {
+          trigger: this.element,
+          start: "bottom bottom",
+          toggleActions: "play reverse play reverse",
+        },
+      }
+    )
   }
 
   createMesh() {
@@ -73,6 +88,9 @@ export default class Media {
         },
         uProgress: {
           value: 0,
+        },
+        uGridBase: {
+          value: parseFloat(this.element.getAttribute("data-grid") || "20"),
         },
       },
     })

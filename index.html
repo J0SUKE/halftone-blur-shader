@@ -8,14 +8,61 @@
   </head>
   <body>
     <div id="app">
-      <div class="w-full h-full flex justify-center items-center">
-        <div class="w-[35vmax]">
+      <div class="grid grid-cols-12 p-[3vmax] sticky top-0 z-10 gap-x-[3vmax]">
+        <div class="col-start-1">WIP • 02</div>
+        <div class="col-start-5">
+          <p><span>• </span>Gallery</p>
+          <p class="opacity-50"><span class="opacity-0">• </span>About</p>
+          <p class="opacity-50"><span class="opacity-0">• </span>Contact</p>
+        </div>
+        <div class="col-end-13 col-start-12 justify-self-end">
+          <p>Twitter</p>
+          <p>Linkedin</p>
+          <p>Email</p>
+        </div>
+      </div>
+      <div
+        class="w-full grid grid-cols-12 p-[3vmax] gap-y-[18vmax] gap-x-[3vmax]"
+      >
+        <div class="col-span-3 col-start-2">
           <img
             class="opacity-0"
+            data-grid="20"
             data-halftone-media
             src="/public/medias/1.jpg"
             alt=""
           />
+          <p class="mt-[max(.6rem,.6vmax)]">MEDIA_1.JPG</p>
+        </div>
+        <div class="col-span-4 col-start-6 row-start-2">
+          <img
+            class="opacity-0"
+            data-grid="25"
+            data-halftone-media
+            src="/public/medias/2.jpg"
+            alt=""
+          />
+          <p class="mt-[max(.6rem,.6vmax)]">MEDIA_2.JPG</p>
+        </div>
+        <div class="col-span-4 col-start-8 row-start-3">
+          <img
+            class="opacity-0"
+            data-grid="25"
+            data-halftone-media
+            src="/public/medias/4.jpg"
+            alt=""
+          />
+          <p class="mt-[max(.6rem,.6vmax)]">MEDIA_3.JPG</p>
+        </div>
+        <div class="col-span-3 col-start-2 row-start-4">
+          <img
+            class="opacity-0"
+            data-grid="20"
+            data-halftone-media
+            src="/public/medias/5.jpg"
+            alt=""
+          />
+          <p class="mt-[max(.6rem,.6vmax)]">MEDIA_4.JPG</p>
         </div>
       </div>
     </div>

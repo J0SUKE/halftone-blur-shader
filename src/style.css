@@ -9,14 +9,12 @@ body {
   font-family: "Aeonik";
 }
 
-html,
-body {
-  height: 100dvh;
-  overflow: hidden;
+* {
+  scrollbar-color: transparent transparent;
 }
 
 body {
-  line-height: 1;
+  line-height: 1.15;
 }
 
 #webgl {
@@ -29,6 +27,7 @@ body {
 }
 
 #app {
-  height: 100dvh;
+  min-height: 100dvh;
   z-index: 10;
+  position: relative;
 }

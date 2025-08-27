@@ -2,6 +2,7 @@ varying vec2 vUv;
 uniform sampler2D uTexture;
 uniform vec2 uMediaDimensions;
 uniform float uProgress;
+uniform float uGridBase;
 
 vec2 coverUvs(vec2 imageRes,vec2 containerRes,vec2 vUv)
 {
@@ -27,7 +28,7 @@ vec2 coverUvs(vec2 imageRes,vec2 containerRes,vec2 vUv)
 void main()
 {            
     
-    float gridBase = 20.;
+    float gridBase = uGridBase;
 
     
     
@@ -46,7 +47,7 @@ void main()
 
     float progress = uProgress;
 
-    float localProgress = clamp(0.,progress + (1.-gridUvs.y),1.);
+    float localProgress = clamp(0.,exp(1.) * progress + (1.-exp(gridUvs.y)),1.);
 
     float finalProgress = localProgress * 0.71;
 
@@ -65,4 +66,5 @@ void main()
     vec4 final = vec4(vec3(dist)*texel.rgb,dist);
 
     gl_FragColor = final;
+    //gl_FragColor = texel;
 }
