@@ -1,6 +1,7 @@
 varying vec2 vUv;
 uniform sampler2D uTexture;
 uniform vec2 uMediaDimensions;
+uniform float uProgress;
 
 vec2 coverUvs(vec2 imageRes,vec2 containerRes,vec2 vUv)
 {
@@ -26,7 +27,7 @@ vec2 coverUvs(vec2 imageRes,vec2 containerRes,vec2 vUv)
 void main()
 {            
     
-    float gridBase = 10.;
+    float gridBase = 20.;
 
     
     
@@ -43,7 +44,11 @@ void main()
     vec2 squareGridUvs = coverUvs(vec2(1.),uMediaDimensions,gridUvs);
     vec2 squareUvs = coverUvs(vec2(1.),uMediaDimensions,vUv);
 
-    float progress = 0.1;
+    float progress = uProgress;
+
+    float localProgress = clamp(0.,progress + (1.-gridUvs.y),1.);
+
+    float finalProgress = localProgress * 0.71;
 
     //0.71 is the radius of circle covering a 1x1 square at 100%
     
@@ -54,11 +59,10 @@ void main()
 
     float aspect = uMediaDimensions.x/uMediaDimensions.y;
 
-    //float dist = 1.-step(0.5/gridDist,distance(squareGridUvs , squareUvs - vec2(0.5*aspect/grid.x, 0.5/grid.y)));
-    float dist = 1.-step(0.6/gridDist,distance(gridUvs , vUv - vec2(0.5/grid.x, 0.5/grid.y)));
+    float dist = 1.-step(finalProgress/gridDist,distance(squareUvs, squareGridUvs  + vec2(0.5*aspect/grid.x, 0.5/grid.y)));
+    //float dist = 1.-step(0.5/gridDist,distance(squareUvs , squareGridUvs + vec2(0.5/grid.x, 0.5/grid.y)));
 
     vec4 final = vec4(vec3(dist)*texel.rgb,dist);
-    //vec4 final = vec4(vec3(dist),1.);
 
     gl_FragColor = final;
 }

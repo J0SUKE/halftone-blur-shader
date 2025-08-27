@@ -3,11 +3,13 @@ import * as THREE from "three"
 
 import fragmentShader from "./shaders/fragment.glsl"
 import vertexShader from "./shaders/vertex.glsl"
+import GUI from "lil-gui"
 
 interface Props {
   element: HTMLImageElement
   scene: THREE.Scene
   sizes: Size
+  gui: GUI
 }
 
 export default class Media {
@@ -25,11 +27,13 @@ export default class Media {
   lastScroll: number
   scrollSpeed: number
   texture: THREE.Texture
+  gui: GUI
 
-  constructor({ element, scene, sizes }: Props) {
+  constructor({ element, scene, sizes, gui }: Props) {
     this.element = element
     this.scene = scene
     this.sizes = sizes
+    this.gui = gui
 
     this.currentScroll = 0
     this.lastScroll = 0
@@ -44,6 +48,11 @@ export default class Media {
     this.setMeshPosition()
 
     this.scene.add(this.mesh)
+
+    this.gui
+      .add(this.material.uniforms.uProgress, "value", 0, 1)
+      .name("progress")
+      .step(0.001)
   }
 
   createMesh() {
@@ -61,6 +70,9 @@ export default class Media {
         uResolution: { value: new THREE.Vector2() },
         uMediaDimensions: {
           value: new THREE.Vector2(1, 1),
+        },
+        uProgress: {
+          value: 0,
         },
       },
     })

@@ -33,7 +33,7 @@ export default class Canvas {
     this.createDebug()
     this.createMedias()
 
-    this.debug.hide()
+    //this.debug.hide()
 
     this.render()
   }
@@ -49,6 +49,7 @@ export default class Canvas {
         element: element as HTMLImageElement,
         scene: this.scene,
         sizes: this.sizes,
+        gui: this.debug,
       })
 
       this.medias.push(media)
