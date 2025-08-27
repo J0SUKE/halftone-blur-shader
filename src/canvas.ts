@@ -2,10 +2,7 @@ import * as THREE from "three"
 import { Dimensions, Size } from "./types/types"
 import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 import GUI from "lil-gui"
-
-import vertexShader from "./shaders/vertex.glsl"
-import fragmentShader from "./shaders/fragment.glsl"
-import Plane from "./plane"
+import Media from "./media"
 
 export default class Canvas {
   element: HTMLCanvasElement
@@ -20,7 +17,7 @@ export default class Canvas {
   mouse: THREE.Vector2
   orbitControls: OrbitControls
   debug: GUI
-  plane: Plane
+  medias: Media[] = []
 
   constructor() {
     this.element = document.getElementById("webgl") as HTMLCanvasElement
@@ -34,12 +31,7 @@ export default class Canvas {
     //this.createOrbitControls()
     this.addEventListeners()
     this.createDebug()
-
-    this.plane = new Plane({
-      scene: this.scene,
-      sizes: this.sizes,
-      gui: this.debug,
-    })
+    this.createMedias()
 
     this.debug.hide()
 
@@ -48,6 +40,19 @@ export default class Canvas {
 
   createScene() {
     this.scene = new THREE.Scene()
+  }
+
+  createMedias() {
+    const elements = document.querySelectorAll("[data-halftone-media]")
+    elements.forEach((element) => {
+      const media = new Media({
+        element: element as HTMLImageElement,
+        scene: this.scene,
+        sizes: this.sizes,
+      })
+
+      this.medias.push(media)
+    })
   }
 
   createCamera() {
@@ -140,13 +145,17 @@ export default class Canvas {
     this.renderer.setPixelRatio(this.dimensions.pixelRatio)
     this.renderer.setSize(this.dimensions.width, this.dimensions.height)
 
-    this.plane?.onResize(this.sizes)
+    this.medias.forEach((media) => {
+      media.onResize(this.sizes)
+    })
   }
 
   render() {
     this.time = this.clock.getElapsedTime()
 
-    this.plane.render(this.time)
+    this.medias.forEach((media) => {
+      media.render()
+    })
 
     this.renderer.render(this.scene, this.camera)
   }
