@@ -7,62 +7,159 @@
     <title>Vite + TS</title>
   </head>
   <body>
-    <div id="app">
-      <div class="grid grid-cols-12 p-[3vmax] sticky top-0 z-10 gap-x-[3vmax]">
-        <div class="col-start-1">WIP • 02</div>
-        <div class="col-start-5">
-          <p><span>• </span>Gallery</p>
-          <p class="opacity-50"><span class="opacity-0">• </span>About</p>
-          <p class="opacity-50"><span class="opacity-0">• </span>Contact</p>
+    <div id="app" class="relative text-[rgb(22,22,22)]">
+      <div id="homepage" class="relative">
+        <div
+          class="grid grid-cols-12 p-[3vmax] sticky top-0 z-10 gap-x-[3vmax]"
+        >
+          <div class="col-start-1">WIP • 02</div>
+          <div class="col-start-5">
+            <p><span>• </span>Gallery</p>
+            <p class="opacity-50"><span class="opacity-0">• </span>About</p>
+            <p class="opacity-50"><span class="opacity-0">• </span>Contact</p>
+          </div>
+          <div class="col-end-13 col-start-12 justify-self-end">
+            <p>Twitter</p>
+            <p>Linkedin</p>
+            <p>Email</p>
+          </div>
         </div>
-        <div class="col-end-13 col-start-12 justify-self-end">
-          <p>Twitter</p>
-          <p>Linkedin</p>
-          <p>Email</p>
+        <div
+          class="w-full grid grid-cols-12 p-[3vmax] gap-y-[18vmax] gap-x-[3vmax]"
+        >
+          <div class="col-span-3 col-start-2">
+            <img
+              class="opacity-0 w-full object-contain"
+              data-grid="20"
+              data-halftone-media
+              data-halftone-media-name="MEDIA_1.JPG"
+              data-halftone-media-size="33.7 KB"
+              data-halftone-media-width="375px"
+              data-halftone-media-height="468px"
+              data-halftone-media-bit-depth="24"
+              data-halftone-media-horizontal-resolution="96dpi"
+              data-halftone-media-vertical-resolution="96dpi"
+              src="/public/medias/1.jpg"
+              alt=""
+            />
+            <p class="mt-[1.5vmax]">MEDIA_1.JPG</p>
+          </div>
+          <div class="col-span-4 col-start-6 row-start-2">
+            <img
+              class="opacity-0 w-full object-contain"
+              data-grid="25"
+              data-halftone-media
+              data-halftone-media-name="MEDIA_2.JPG"
+              data-halftone-media-size="64.4 KB"
+              data-halftone-media-width="750px"
+              data-halftone-media-height="750px"
+              data-halftone-media-bit-depth="24"
+              data-halftone-media-horizontal-resolution="96dpi"
+              data-halftone-media-vertical-resolution="96dpi"
+              src="/public/medias/2.jpg"
+              alt=""
+            />
+            <p class="mt-[1.5vmax]">MEDIA_2.JPG</p>
+          </div>
+          <div class="col-span-4 col-start-8 row-start-3">
+            <img
+              class="opacity-0 w-full object-contain"
+              data-grid="25"
+              data-halftone-media
+              data-halftone-media-name="MEDIA_3.JPG"
+              data-halftone-media-size="180 KB"
+              data-halftone-media-width="1080px"
+              data-halftone-media-height="1341px"
+              data-halftone-media-bit-depth="24"
+              data-halftone-media-horizontal-resolution="96dpi"
+              data-halftone-media-vertical-resolution="96dpi"
+              src="/public/medias/4.jpg"
+              alt=""
+            />
+            <p class="mt-[1.5vmax]">MEDIA_3.JPG</p>
+          </div>
+          <div class="col-span-3 col-start-2 row-start-4">
+            <img
+              class="opacity-0"
+              class="opacity-0 w-full object-contain"
+              data-grid="20"
+              data-halftone-media
+              data-halftone-media-name="MEDIA_4.JPG"
+              data-halftone-media-size="243 KB"
+              data-halftone-media-width="794px"
+              data-halftone-media-height="896px"
+              data-halftone-media-bit-depth="24"
+              data-halftone-media-horizontal-resolution="96dpi"
+              data-halftone-media-vertical-resolution="96dpi"
+              src="/public/medias/5.jpg"
+              alt=""
+            />
+            <p class="mt-[1.5vmax]">MEDIA_4.JPG</p>
+          </div>
         </div>
       </div>
       <div
-        class="w-full grid grid-cols-12 p-[3vmax] gap-y-[18vmax] gap-x-[3vmax]"
+        class="fixed top-0 left-0 w-full z-20 h-full text-white p-[3vmax] flex flex-col gap-[6vmax]"
+        style="opacity: 0; pointer-events: none"
+        id="media-block"
       >
-        <div class="col-span-3 col-start-2">
-          <img
-            class="opacity-0"
-            data-grid="20"
-            data-halftone-media
-            src="/public/medias/1.jpg"
-            alt=""
-          />
-          <p class="mt-[max(.6rem,.6vmax)]">MEDIA_1.JPG</p>
+        <div class="grid grid-cols-12 sticky top-0 z-10 gap-x-[3vmax]">
+          <div class="col-start-1">
+            <button class="cursor-pointer" data-back-button>WIP • 02</button>
+          </div>
+          <div class="col-start-5">
+            <p><span>• </span>Gallery</p>
+            <p class="opacity-50"><span class="opacity-0">• </span>About</p>
+            <p class="opacity-50"><span class="opacity-0">• </span>Contact</p>
+          </div>
+          <div class="col-end-13 col-start-12 justify-self-end">
+            <p>Twitter</p>
+            <p>Linkedin</p>
+            <p>Email</p>
+          </div>
         </div>
-        <div class="col-span-4 col-start-6 row-start-2">
-          <img
-            class="opacity-0"
-            data-grid="25"
-            data-halftone-media
-            src="/public/medias/2.jpg"
-            alt=""
-          />
-          <p class="mt-[max(.6rem,.6vmax)]">MEDIA_2.JPG</p>
+        <div class="grid grid-cols-12 gap-x-[3vmax]">
+          <div class="col-start-2 col-end-4 flex flex-col gap-[3vmax]">
+            <div class="w-full grid grid-cols-2 gap-x-[3vmax]">
+              <div class="col-start-1">Size</div>
+              <div data-media-size-container class="col-start-2">33.7 KB</div>
+            </div>
+            <div class="w-full grid grid-cols-2 gap-x-[3vmax] gap-y-[1.5vmax]">
+              <div class="col-start-1">Width</div>
+              <div data-media-width-container class="col-start-2">375px</div>
+              <div class="col-start-1">Height</div>
+              <div data-media-height-container class="col-start-2">468px</div>
+            </div>
+            <div class="w-full grid grid-cols-2 gap-x-[3vmax] gap-y-[1.5vmax]">
+              <div class="col-start-1">Bit depth</div>
+              <div data-media-bit-depth-container class="col-start-2">24</div>
+              <div class="col-start-1">Horizontal resolution</div>
+              <div
+                data-media-horizontal-resolution-container
+                class="col-start-2"
+              >
+                96dpi
+              </div>
+              <div class="col-start-1">Vertical resolution</div>
+              <div data-media-vertical-resolution-container class="col-start-2">
+                96dpi
+              </div>
+            </div>
+          </div>
+
+          <div class="col-span-4 col-start-5">
+            <img
+              class="w-full object-contain"
+              data-full-size-image
+              data-grid="20"
+              src="/public/medias/5.jpg"
+              alt=""
+            />
+            <p data-media-name-container class="mt-[1.5vmax]">MEDIA_1.JPG</p>
+          </div>
         </div>
-        <div class="col-span-4 col-start-8 row-start-3">
-          <img
-            class="opacity-0"
-            data-grid="25"
-            data-halftone-media
-            src="/public/medias/4.jpg"
-            alt=""
-          />
-          <p class="mt-[max(.6rem,.6vmax)]">MEDIA_3.JPG</p>
-        </div>
-        <div class="col-span-3 col-start-2 row-start-4">
-          <img
-            class="opacity-0"
-            data-grid="20"
-            data-halftone-media
-            src="/public/medias/5.jpg"
-            alt=""
-          />
-          <p class="mt-[max(.6rem,.6vmax)]">MEDIA_4.JPG</p>
+        <div class="absolute bottom-0 left-0 w-full p-[3vmax]">
+          <p data-media-index-container>01/04</p>
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ class App {
 
   constructor() {
     this.scroll = new Scroll()
-    this.canvas = new Canvas()
+    this.canvas = new Canvas({ scroll: this.scroll })
 
     this.scroll.onScroll(() => this.canvas.onScroll(this.scroll.getScroll()))
 

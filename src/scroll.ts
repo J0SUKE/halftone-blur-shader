@@ -29,6 +29,12 @@ export default class Scroll {
     this.lenis.on("scroll", callback.bind(this))
   }
 
+  resetScroll() {
+    this.lenis.scrollTo(0, { immediate: true })
+    this.scroll = 0
+    ScrollTrigger.refresh()
+  }
+
   getScroll() {
     return this.scroll
   }

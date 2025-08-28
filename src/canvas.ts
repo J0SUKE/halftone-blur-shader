@@ -4,6 +4,13 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js"
 import GUI from "lil-gui"
 import Media from "./media"
 import Scroll from "./scroll"
+import Transition from "./transition"
+import gsap from "gsap"
+import { $ } from "./utils/dom"
+
+interface Props {
+  scroll: Scroll
+}
 
 export default class Canvas {
   element: HTMLCanvasElement
@@ -20,9 +27,15 @@ export default class Canvas {
   debug: GUI
   medias: Media[] = []
   scroll: Scroll
+  transition: Transition
+  mediaInfoBlock: HTMLDivElement
 
-  constructor() {
+  constructor({ scroll }: Props) {
+    this.scroll = scroll
     this.element = document.getElementById("webgl") as HTMLCanvasElement
+    this.mediaInfoBlock = document.getElementById(
+      "media-block"
+    ) as HTMLDivElement
     this.time = 0
     this.createClock()
     this.createScene()
@@ -34,10 +47,23 @@ export default class Canvas {
     this.addEventListeners()
     this.createDebug()
     this.createMedias()
+    this.createTransition()
 
     this.debug.hide()
 
     this.render()
+
+    this.medias.forEach((media, index) => {
+      media.element.addEventListener("click", () => {
+        this.onClickMedia(media.element, index + 1)
+      })
+    })
+
+    document
+      .querySelector("[data-back-button]")
+      ?.addEventListener("click", () => {
+        this.onClickBack()
+      })
   }
 
   createScene() {
@@ -55,6 +81,14 @@ export default class Canvas {
       })
 
       this.medias.push(media)
+    })
+  }
+
+  createTransition() {
+    this.transition = new Transition({
+      scene: this.scene,
+      sizes: this.sizes,
+      gui: this.debug,
     })
   }
 
@@ -150,12 +184,86 @@ export default class Canvas {
 
     this.medias.forEach((media) => {
       media.onResize(this.sizes)
+      media.updateScroll(this.scroll.getScroll())
     })
   }
 
   onScroll(scrollY: number) {
     this.medias?.forEach((media) => {
       media.updateScroll(scrollY)
+    })
+  }
+
+  onClickMedia(media: HTMLImageElement, index: number) {
+    this.fillMediaData(media, index)
+    this.transition.transitionIn().then(() => {
+      this.mediaInfoBlock.style.pointerEvents = "all"
+      document.body.style.background = "rgb(22,22,22)"
+      this.medias.forEach((m) => {
+        m.hide()
+      })
+      gsap.to(this.mediaInfoBlock, {
+        opacity: 1,
+        duration: 0.4,
+        onComplete: () => {
+          this.transition.reset()
+        },
+      })
+    })
+  }
+
+  fillMediaData(element: HTMLImageElement, index: number) {
+    $("[data-media-name-container]").textContent =
+      element.getAttribute("data-halftone-media-name") || ""
+
+    $("[data-media-size-container]").textContent =
+      element.getAttribute("data-halftone-media-size") || ""
+
+    $("[data-media-width-container]").textContent =
+      element.getAttribute("data-halftone-media-width") || ""
+
+    $("[data-media-height-container]").textContent =
+      element.getAttribute("data-halftone-media-height") || ""
+
+    $("[data-media-bit-depth-container]").textContent =
+      element.getAttribute("data-halftone-media-bit-depth") || ""
+
+    $("[data-media-horizontal-resolution-container]").textContent =
+      element.getAttribute("data-halftone-media-horizontal-resolution") || ""
+
+    $("[data-media-vertical-resolution-container]").textContent =
+      element.getAttribute("data-halftone-media-vertical-resolution") || ""
+
+    $("[data-media-index-container]").textContent =
+      "0" + index.toString() + "/04"
+    ;($("[data-full-size-image]") as HTMLImageElement).src = element.src
+  }
+
+  onClickBack() {
+    this.scroll.resetScroll()
+
+    this.element.style.zIndex = "30"
+
+    const homepage = $("#homepage")
+
+    gsap.set(homepage, {
+      opacity: 0,
+    })
+
+    this.transition.transitionOut().then(() => {
+      document.body.style.background = "white"
+      this.mediaInfoBlock.style.opacity = "0"
+      this.mediaInfoBlock.style.pointerEvents = "none"
+      this.transition.reset()
+      this.element.style.zIndex = "0"
+      gsap.to(homepage, {
+        opacity: 1,
+        duration: 0.3,
+      })
+
+      this.medias.forEach((m) => {
+        m.setupScrollTrigger()
+      })
     })
   }
 

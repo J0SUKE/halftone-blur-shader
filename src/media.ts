@@ -29,6 +29,7 @@ export default class Media {
   scrollSpeed: number
   texture: THREE.Texture
   gui: GUI
+  scrollTrigger: gsap.core.Tween | null
 
   constructor({ element, scene, sizes, gui }: Props) {
     this.element = element
@@ -50,12 +51,11 @@ export default class Media {
 
     this.scene.add(this.mesh)
 
-    this.gui
-      .add(this.material.uniforms.uProgress, "value", 0, 1)
-      .name("progress")
-      .step(0.01)
+    this.setupScrollTrigger()
+  }
 
-    gsap.fromTo(
+  setupScrollTrigger() {
+    this.scrollTrigger = gsap.fromTo(
       this.material.uniforms.uProgress,
       { value: 0 },
       {
@@ -70,6 +70,12 @@ export default class Media {
     )
   }
 
+  hide() {
+    this.material.uniforms.uProgress.value = 0
+    this.scrollTrigger?.kill()
+    this.scrollTrigger = null
+  }
+
   createMesh() {
     this.mesh = new THREE.Mesh(this.geometry, this.material)
   }
@@ -81,8 +87,6 @@ export default class Media {
       transparent: true,
       uniforms: {
         uTexture: { value: null },
-        uTime: { value: 0 },
-        uResolution: { value: new THREE.Vector2() },
         uMediaDimensions: {
           value: new THREE.Vector2(1, 1),
         },
